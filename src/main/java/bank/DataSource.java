@@ -66,7 +66,7 @@ public class DataSource {
   }
 
   public static void updateAccountBalance(int accountId, double balance) {
-    String sql = "update accounts set balanace = ? where id = ?";
+    String sql = "update accounts set balance = ? where id = ?";
     try (
         Connection connection = connect();
         PreparedStatement statement = connection.prepareStatement(sql);) {
