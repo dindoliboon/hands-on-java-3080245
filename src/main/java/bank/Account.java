@@ -1,5 +1,7 @@
 package bank;
 
+import exceptions.AmountException;
+
 public class Account {
   private int id;
   private String type;
@@ -35,13 +37,27 @@ public class Account {
     this.balance = balance;
   }
 
-  public void deposit(double amount) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'deposit22'");
+  public void deposit(double amount) throws AmountException {
+    if (amount < 1) {
+      throw new AmountException("The minimum deposit is 1.00.");
+    }
+
+    double newBalance = balance + amount;
+    setBalance(newBalance);
+    DataSource.updateAccountBalance(id, newBalance);
   }
 
-  public void withdraw(double amount) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'withdraw'");
+  public void withdraw(double amount) throws AmountException {
+    if (amount < 0) {
+      throw new AmountException("The minimum withdraw amount must be greater than 0.");
+    }
+
+    if (amount > getBalance()) {
+      throw new AmountException("You do not have sufficient funds for this withdrawal.");
+    }
+
+    double newBalance = balance - amount;
+    setBalance(newBalance);
+    DataSource.updateAccountBalance(id, newBalance);
   }
 }
